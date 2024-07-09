@@ -5,9 +5,31 @@
 // It should also have a method named `is_available` that returns a `true` if the quantity is
 // greater than 0, otherwise `false`.
 
+struct Order {
+    price: u16,
+    quantity: u16,
+}
+
+impl Order {
+    fn default_order() -> Order {
+        Order { price: 1, quantity: 1 }
+    }
+
+    fn is_available(self) -> bool {
+        self.quantity > 0
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_default_order() {
+        let order = Order::default_order();
+        assert_eq!(order.price, 1);
+        assert_eq!(order.quantity, 1);
+    }
 
     #[test]
     fn test_order_is_available() {
