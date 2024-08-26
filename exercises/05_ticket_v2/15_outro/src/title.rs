@@ -9,8 +9,11 @@ impl TryFrom<String> for TicketTitle {
     type Error = String; 
 
     fn try_from(value: String) -> Result<Self, Self::Error> {
-        if value.is_empty() || value.len() > 50 {
-            return Err("Invalid title".to_string());
+        if value.is_empty() {
+            return Err("The title cannot be empty".to_string());
+        }
+        if  value.len() > 50 {
+            return Err("The title cannot be longer than 50 bytes".to_string());
         }
         Ok(TicketTitle(value))
     }
@@ -20,8 +23,11 @@ impl TryFrom<&str> for TicketTitle {
     type Error = String;
 
     fn try_from(value: &str) -> Result<Self, Self::Error> {
-        if value.is_empty() || value.len() > 50 {
-            return Err("Invalid title".to_string());
+        if value.is_empty() {
+            return Err("The title cannot be empty".to_string());
+        }
+        if  value.len() > 50 {
+            return Err("The title cannot be longer than 50 bytes".to_string());
         }
         Ok(TicketTitle(value.to_string()))
     }
