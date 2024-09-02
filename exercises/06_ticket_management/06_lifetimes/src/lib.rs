@@ -20,6 +20,15 @@ pub enum Status {
     Done,
 }
 
+impl<'x> IntoIterator for &'x TicketStore {
+    type Item = &'x Ticket;
+    type IntoIter = std::slice::Iter<'x, Ticket>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.tickets.iter()
+    }
+}
+
 impl TicketStore {
     pub fn new() -> Self {
         Self {
