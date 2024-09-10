@@ -44,8 +44,25 @@ impl TicketStore {
         }
     }
 
-    pub fn add_ticket(&mut self, ticket: Ticket) {
-        self.tickets.push(ticket);
+    pub fn get(&self, id: TicketId) -> Option<&Ticket> {
+        self.tickets.iter().find(|ticket| ticket.id == id)
+    }
+
+    pub fn add_ticket(&mut self, ticket_draft: TicketDraft) -> TicketId {
+        let next_id = self.get_next_id();
+
+        self.tickets.push(Ticket { id: next_id, title: ticket_draft.title, description: ticket_draft.description, status: Status::ToDo } );
+
+        next_id
+    }
+
+    fn get_next_id(&self) -> TicketId {
+        let next_id = match self.tickets.iter().map(|ticket| ticket.id.0).max() {
+            None => 1,
+            Some(id) => id + 1,
+        };
+
+        TicketId(next_id)
     }
 }
 
